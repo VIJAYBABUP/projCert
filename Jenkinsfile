@@ -31,19 +31,19 @@ pipeline {
         stage('Build') {
             steps {
                 // Get some code from a GitHub repository
-                git 'https://github.com/sanmathipriyars/projCert.git'
+                git 'https://github.com/VIJAYBABUP/projCert.git'
 
                 // Run docker image
-                sh ''' docker build -t sanmathipriya-app-edu .
-                docker run --name webapp -d sanmathipriya-app-edu
-                cont_id=$(docker ps | grep webapp|awk '{print $1}')
-                ip_cont=$(docker inspect -f '{{.Name}} - {{.NetworkSettings.IPAddress }}' $(docker ps -aq)|grep webapp|awk '{print $3}')
+                sh ''' docker build -t babupvijay-first-phpapp .
+                docker run --name phpapp -d babupvijay-first-phpapp
+                cont_id=$(docker ps | grep phpapp|awk '{print $1}')
+                ip_cont=$(docker inspect -f '{{.Name}} - {{.NetworkSettings.IPAddress }}' $(docker ps -aq)|grep phpapp|awk '{print $3}')
                 curl http://$ip_cont '''
             }
             post {
                 failure {
                   sh ''' echo 'Removing container'
-                  cont_id=$(docker ps | grep webapp|awk '{print $1}')
+                  cont_id=$(docker ps | grep phpapp|awk '{print $1}')
                   docker stop $cont_id
 		  docker rm $cont_id '''
                 }
