@@ -1,5 +1,5 @@
 pipeline {
-    agent {label 'node1'}
+    agent {label 'slave1'}
     stages {
         stage('Configure Deploy Puppet agent') {
             steps {
